@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0 # Perform full clone of submodule
       - uses: taiki-e/install-action@v2
         with:
           tool: zola@0.17.2
