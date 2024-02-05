@@ -15,7 +15,6 @@ theme = "d3c3nt"
 highlight_code = false
 
 [extra]
-# Put all your custom variables here
 d3_nav = [
   { name = "HOME", path = "/" },
   { name = "POSTS", path = "/posts/" }
