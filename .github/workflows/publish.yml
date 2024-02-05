@@ -12,8 +12,6 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: zola@0.17.2
-      - name: Install theme
-        run: git submodule add git://git.figbert.com/d3c3nt.git themes/d3c3nt
       - name: Build
         run: zola build
       - name: Configure AWS credentials
