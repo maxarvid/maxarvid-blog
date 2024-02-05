@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0 # Perform full clone of submodule
       - uses: taiki-e/install-action@v2
         with:
-          tool: zola@0.17.2
+          tool: zola@0.18.0
       - name: Build
         run: zola build
       - name: Configure AWS credentials
