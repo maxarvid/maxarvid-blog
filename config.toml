@@ -1,4 +1,4 @@
-base_url = "http://maxarvid-website.s3-website.eu-north-1.amazonaws.com"
+base_url = "https://maxarvid.com"
 theme = "d3c3nt"
 
 [extra]
