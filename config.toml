@@ -4,7 +4,7 @@ theme = "d3c3nt"
 [extra]
 d3_icon = "/favicon.png"
 d3_nav = [
-  { name = "/", path = "/" },
+  { name = "home", path = "/" },
   { name = "posts", path = "/posts/" },
   { name = "about", path = "/about/"}
 ]
