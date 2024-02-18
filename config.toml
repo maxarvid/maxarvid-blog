@@ -8,3 +8,4 @@ d3_nav = [
   { name = "posts", path = "/posts/" },
   { name = "about", path = "/about/"}
 ]
+d3_author = "maxarvid"
