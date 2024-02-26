@@ -3,7 +3,7 @@ title = "maxarvid"
 compile_sass = true
 build_search_index = false
 
-theme = "oceanic-zen"
+# theme = "oceanic-zen"
 
 [markdown]
 highlight_code = true
