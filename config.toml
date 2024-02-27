@@ -3,8 +3,6 @@ title = "maxarvid"
 compile_sass = true
 build_search_index = false
 
-# theme = "oceanic-zen"
-
 [markdown]
 highlight_code = true
 highlight_theme = "visual-studio-dark"
