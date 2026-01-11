@@ -13,23 +13,36 @@ To format the rows we'll use the stream editor utility, `sed`.
 
 To appease the lexical sorting required by `comm`, we'll use the `sort` utility. Let's slap it all together with some pipes:
 ```sh
-comm -23 <(git branch | sed 's/..//' | sort) <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort)
+comm -23 \
+  <(git branch | sed 's/..//' | sort) \
+  <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort)
 ```
 Running this outputs the (in my case) considerable list of branches that I only have on my machine. Piping this into a `git branch -d` can be achieved by using the `xargs` utility:
 ```sh
-comm -23 <(git branch | sed 's/..//' | sort) <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort) | xargs -n 1 git branch -d
+comm -23 \
+  <(git branch | sed 's/..//' | sort) \
+  <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort) \
+  | xargs -n 1 git branch -d
 ```
 Now in my case, I need to run it with `-D` and not `—d` since I've never merged these branches. 
 ## TLDR;
 List local branches not present on remote:
 ```sh
-comm -23 <(git branch | sed 's/..//' | sort) <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort)
+comm -23 \
+  <(git branch | sed 's/..//' | sort) \
+  <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort)
 ```
 Delete local branches not present on remote that have been merged:
 ```sh
-comm -23 <(git branch | sed 's/..//' | sort) <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort) | xargs -n 1 git branch -d
+comm -23 \
+  <(git branch | sed 's/..//' | sort) \
+  <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort) \
+  | xargs -n 1 git branch -d
 ```
 Delete local *unmerged* branches not present on remote:
 ```sh
-comm -23 <(git branch | sed 's/..//' | sort) <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort) | xargs -n 1 git branch -D
+comm -23 \
+  <(git branch | sed 's/..//' | sort) \
+  <(git branch -r | sed 's/..//' | sed 's/origin\///' | sort) \
+  | xargs -n 1 git branch -D
 ```
