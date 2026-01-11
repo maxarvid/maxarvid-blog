@@ -3,9 +3,8 @@ title = "maxarvid"
 compile_sass = true
 build_search_index = false
 
-[markdown]
-highlight_code = true
-highlight_theme = "visual-studio-dark"
+[markdown.highlighting]
+theme = "github-dark"
 
 [extra]
 author = "maxarvid"
