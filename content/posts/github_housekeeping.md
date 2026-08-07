@@ -7,19 +7,19 @@ Sometime ago I whined about keeping my local machine clean from git branches tha
 
 Now I have cause to whine again. Imagine this scenario: You are the maintainer of some private codebase which is hosted on Github. Your workflow consists of raising Pull Requests and merging them, and it is your habit to delete the feature branches upon merge. But oh no, now it's 2026 and all of a sudden you are collaborating with various agentic contributors (human ones too), and sometimes people and agents forget to clean up after themselves. When you run `git branch -r` you find it difficult to understand what work is ongoing because the output is overwhelming. You are in need of some terminal commands to delete a bunch of branches on remote.
 
-Prequisite: In your desperation, you at some point installed the [Github-CLI](https://cli.github.com/) on your machine with the proper credentials.
+Prerequisite: In your desperation, you at some point installed the [Github-CLI](https://cli.github.com/) on your machine with the proper credentials.
 
 Let's dive in. Let's be prudent and first get a list of branches associated with PRs either merged or closed (hint: they both have a state of "closed")
 ```sh
 gh pr list --state closed --limit 100 --json headRefName --jq '.[].headRefName'
 ```
-Github names the branch name property an intuitive `headRefName` (you know things are bad when you limit to 100 results, I hope you are not in the same boat). But wait a minnute, what if we have a `develop` and a `main` branch? Won't this commadn return PRs that were releases to `main`? Yes. Yes it would, let's filter using `-- base`
+Github names the branch name property an intuitive `headRefName` (you know things are bad when you limit to 100 results, I hope you are not in the same boat). But wait a minute, what if we have a `develop` and a `main` branch? Won't this command return PRs that were releases to `main`? Yes. Yes it would, let's filter using `-- base`
 ```sh
 gh pr list --state closed --base develop --limit 100 \
   --json headRefName --jq '.[].headRefName' \
   | sort -u
 ```
-Switching over from the Github CLI to more OG git commmands, let's normalize the `git branch -r` output and filter out some of the required branches (`main` and `develop` in the below example):
+Switching over from the Github CLI to more OG git commands, let's normalize the `git branch -r` output and filter out some of the required branches (`main` and `develop` in the below example):
 ```sh
 git branch -r \
   | sed 's|^[[:space:]]*origin/||' \
@@ -33,7 +33,7 @@ comm -12 \
   <(gh pr list --state closed --base develop --limit 500 --json headRefName --jq '.[].headRefName' | sort -u) \
   <(git branch -r | sed 's|^[[:space:]]*origin/||' | grep -v ' -> ' | grep -Ev '^(develop|main)$' | sort -u)
 ```
-This will output an overlap list, that is to say, branches that are present on remote, that have been the compare branch for a *closed* PR. In the workflow described above, this is sufficient to delete these branches, but YMMV. It might be worthwhile to read thourgh this list before going for the following steps. Now we need to reach for the scary looking `git push origin --delete branch-name`. To calm the nerves, a dry-run using `echo` is advised:
+This will output an overlap list, that is to say, branches that are present on remote, that have been the compare branch for a *closed* PR. In the workflow described above, this is sufficient to delete these branches, but YMMV. It might be worthwhile to read through this list before going for the following steps. Now we need to reach for the scary looking `git push origin --delete branch-name`. To calm the nerves, a dry-run using `echo` is advised:
 ```sh
 comm -12 \
   <(gh pr list --state closed --base develop --limit 500 --json headRefName --jq '.[].headRefName' | sort -u) \
@@ -47,4 +47,4 @@ comm -12 \
   <(git branch -r | sed 's|^[[:space:]]*origin/||' | grep -v ' -> ' | grep -Ev '^(develop|main)$' | sort -u) \
 | xargs -n1 git push origin --delete
 ```
-And that's it! And if all this seems scary, just swap out the `--closed` with a `--merged` in the `gh pr list` command. Happy version controll janitorial feelings all around.
+And that's it! And if all this seems scary, just swap out the `--closed` with a `--merged` in the `gh pr list` command. Happy version control janitorial feelings all around.
