@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - uses: taiki-e/install-action@v2
         with:
           tool: zola@0.23.6
