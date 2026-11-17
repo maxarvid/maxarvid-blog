@@ -28,6 +28,7 @@ In addition to not me not being able to see the files on my Github's repo's GUI 
 ```
 Which did the trick! Full workflow file below for ease of reference:
 
+{% raw %}
 ```yml
 name: Build and Publish to AWS
 on:
@@ -60,3 +61,4 @@ jobs:
       - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
 ```
+{% endraw %}

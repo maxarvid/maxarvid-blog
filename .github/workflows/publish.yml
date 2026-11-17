@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: taiki-e/install-action@v2
         with:
-          tool: zola@0.22.0
+          tool: zola@0.23.6
       - name: Build
         run: zola build
       - name: Configure AWS credentials
